@@ -53,7 +53,11 @@ public class Bibliotecario {
                     	if (documentoSeleccionado != null) {
                     		System.out.println("Introduce dni: ");
                     		Usuario usuario = ConsultasUsuarios.findDni(scan.nextLine());
-                    		ConsultasPrestamos.devolverDocumento(usuario, documentoSeleccionado, LocalDate.now());
+                    		if (usuario != null) {
+                        		ConsultasPrestamos.devolverDocumento(usuario, documentoSeleccionado, LocalDate.now());
+							} else {
+								System.out.println("ERROR. Usuario no encontrado");
+							}
                     	} else {
                     		System.out.println("Primero es necesario seleccionar un documento");
                     	}

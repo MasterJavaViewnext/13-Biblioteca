@@ -129,7 +129,7 @@ public class ConsultasDocumentos {
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				//Creacion de Libro o Revista dependiendo del tipo_documento
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					if (resultSet.getString("tipo_documento").equalsIgnoreCase(TipoDocumento.LIBRO.name())) {
 						documento = new Libro();
 					} else {
@@ -141,6 +141,7 @@ public class ConsultasDocumentos {
 					if (documento instanceof Libro) {
 						((Libro) documento).setAnhoPublicacion(resultSet.getInt("anho_publicacion"));
 					}
+					System.out.println(documento);
 				}
 			}
 		}
