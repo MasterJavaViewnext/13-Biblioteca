@@ -145,7 +145,7 @@ public class ConsultasPrestamos {
 	public static void informesPrestamos(ResultSet rs) throws SQLException {
 		while(rs.next()) {
 			Usuario usuario = ConsultasUsuarios.findDni(rs.getString("u.dni"));
-			
+			String titulo = rs.getString("d.titulo");
 		}
 	}
 	
