@@ -2,6 +2,7 @@ package es.rodal.biblioteca.bbdd;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,10 @@ public class ConsultasPrestamos {
 	private static final String UPDATE_DEVOLVER_DOCUMENTO = "UPDATE prestamos SET fecha_devolucion = ?, devuelto = ? WHERE id_usuario = ? AND id_documento = ?";
 	private static final String COUNT_PRESTADOS = "SELECT count(*) AS prestados FROM prestamos WHERE id_usuario = ? AND devuelto = 0";
 	private static final String INFORME_PRESTADOS = "SELECT id_usuario, id_documento FROM prestamos WHERE devuelto = 0";
-
+	private static final String INFORME_PRESTAMOS_JOIN = "SELECT d.titulo, d.anho_publicacion, p.fecha_prestamo, u.dni, u.tipo_usuario "
+			+ "FROM prestamos AS p JOIN usuarios AS u ON p.id_usuario = u.id_usuario "
+			+ "JOIN documentos AS d ON p.id_documento = d.id_documento";
+	
 	/**
 	 * Método que comprueba si el Documento sigue disponible para prestar y si el
 	 * Usuario no ha alcanzado el máximo de documentos. Si estás condiciones se
@@ -128,4 +132,21 @@ public class ConsultasPrestamos {
 			System.out.printf("%s	%s", titulo, prestado );
 		}
 	}
+	
+	public static void informesPrestamosJoin() throws SQLException {
+		try(Connection conexion = Conexion.conectar();
+				PreparedStatement statement = conexion.prepareStatement(INFORME_PRESTAMOS_JOIN)){
+			ResultSet rs = statement.executeQuery();
+			
+			
+		}
+	}
+	
+	public static void informesPrestamos(ResultSet rs) throws SQLException {
+		while(rs.next()) {
+			Usuario usuario = ConsultasUsuarios.findDni(rs.getString("u.dni"));
+			
+		}
+	}
+	
 }
